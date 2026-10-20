@@ -1,0 +1,15 @@
+services:
+  - type: web
+    name: soundz-by-katalyst
+    env: python
+    buildCommand: pip install -r requirements.txt
+    startCommand: gunicorn --bind 0.0.0.0:$PORT music_manager:app
+    envVars:
+      - key: MUSIC_ADMIN_TOKEN
+        sync: false
+      - key: MUSIC_DATA_DIR
+        value: /var/data/music
+    disk:
+      name: music-library
+      mountPath: /var/data
+      sizeGB: 10
